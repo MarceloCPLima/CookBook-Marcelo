@@ -137,6 +137,18 @@ public class CatalogoView {
         //Se estiver com uma receita ativa, abra a tela de edição.
         Receita nova = new EditReceitaView(ative).edit();
         if (nova != null) {
+            do {
+                Receita other = controller.getReceita(nova.getNome());
+                if (other != null) {
+                    String name = ConsoleUtils.getUserInput("Nome de receita já existente ou invalido! Entre com novo nome!%n");
+                    if (!name.isBlank()) {
+                        nova.setNome(name);
+                    }
+                } else {
+                    break;
+                }
+            } while (true);
+
             controller.del(ative.getNome());
             controller.add(nova);
             //Torna a nova receita a ativa.
